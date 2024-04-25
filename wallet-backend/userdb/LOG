@@ -1,0 +1,14 @@
+2024/04/25-12:12:37.434 5f04 Recovering log #363
+2024/04/25-12:12:37.434 5f04 Level-0 table #365: started
+2024/04/25-12:12:37.442 5f04 Level-0 table #365: 701 bytes OK
+2024/04/25-12:12:37.455 5f04 Delete type=0 #363
+2024/04/25-12:12:37.455 5f04 Delete type=3 #362
+2024/04/25-12:12:37.456 6fe4 Compacting 4@0 + 1@1 files
+2024/04/25-12:12:37.460 6fe4 Generated table #367@0: 12 keys, 2635 bytes
+2024/04/25-12:12:37.460 6fe4 Compacted 4@0 + 1@1 files => 2635 bytes
+2024/04/25-12:12:37.464 6fe4 compacted to: files[ 0 2 0 0 0 0 0 ]
+2024/04/25-12:12:37.465 6fe4 Delete type=2 #302
+2024/04/25-12:12:37.465 6fe4 Delete type=2 #322
+2024/04/25-12:12:37.465 6fe4 Delete type=2 #325
+2024/04/25-12:12:37.465 6fe4 Delete type=2 #328
+2024/04/25-12:12:37.466 6fe4 Delete type=2 #365
