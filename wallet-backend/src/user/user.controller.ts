@@ -155,7 +155,7 @@ export class UserController {
   async postTransaction(transaction): Promise<void> {
     try {
       const response = await axios.post(
-        'http://192.168.126.8:3000/transaction', //ekhane localhost change korte hobe
+        'http://192.168.186.8:3000/transaction',
         transaction,
       );
       console.log('Transaction broadcasted:', response.data);
