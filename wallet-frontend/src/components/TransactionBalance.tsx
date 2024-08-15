@@ -8,7 +8,7 @@ const TransactionBalance: React.FC = () => {
     const fetchBalance = async () => {
       try {
         const response = await axios.get(
-          "http://192.168.126.8:3000/transaction/balance/04c8bcdaf3398c9109f30e7f643aa543b5c6ee1f78ac66c9a2320ad0140754ac388630cef350052264bb397ece508ea76e552c8dc0ea4a30f02a9390cb79bfeb29"
+          "http://192.168.186.8:3000/transaction/balance/0413c725274b4709b5faef702e0e91241eefca047a041561ce1d02e7e397fbe665de7f332c4799203770b16958f5e9989c3f11f0ae352588a75f440b891dc990b0"
         );
         setBalance(response.data.balance);
       } catch (error) {
