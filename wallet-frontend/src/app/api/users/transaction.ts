@@ -15,7 +15,7 @@ export default async function handler(
     } = req.body;
     try {
       const response = await axios.post(
-        "http://localhost:3001/users/transaction",
+        process.env.NEXT_PUBLIC_API_ENDPOINT_CHAIN + "",
         {
           senderPrivateKey,
           senderPublicKey,

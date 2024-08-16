@@ -1,4 +1,3 @@
-// UserRegister.tsx
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -21,7 +20,7 @@ const UserRegister: React.FC<IUserRegisterProps> = ({ onRegister }) => {
   const handleRegister = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/users/register",
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/users/register`,
         {
           password,
         }
@@ -35,7 +34,7 @@ const UserRegister: React.FC<IUserRegisterProps> = ({ onRegister }) => {
 
       onRegister(message, mnemonic, publicKey, password, privateKey);
     } catch (error) {
-      console.error(error);
+      console.error("Error registering user:", error);
       onRegister("Error: Failed to register");
     }
   };
@@ -44,14 +43,14 @@ const UserRegister: React.FC<IUserRegisterProps> = ({ onRegister }) => {
     <div className="bg-white p-6 rounded-md shadow-md mb-6 w-max">
       <h2 className="text-lg font-semibold mb-4">Register</h2>
       <input
-        type="text"
+        type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Enter password"
         className="input border rounded border-gray-800 p-1"
       />
-      <br></br>
-      <br></br>
+      <br />
+      <br />
       <button
         onClick={handleRegister}
         className="btn border rounded border-white bg-gray-800 text-white p-1"
@@ -63,8 +62,7 @@ const UserRegister: React.FC<IUserRegisterProps> = ({ onRegister }) => {
         <div className="mt-4">
           <p>Mnemonic: {mnemonic}</p>
           <p>Public Key: {publicKey}</p>
-          <p>Password: {password}</p>
-          <p>Private Key: {privateKey}</p>
+          {/* Avoid displaying the password and private key */}
         </div>
       )}
     </div>

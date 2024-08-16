@@ -8,7 +8,7 @@ export default async function handler(
   if (req.method === "POST") {
     const { passPhrase, password } = req.body;
     try {
-      const response = await axios.post("http://localhost:3001/users/import", {
+      const response = await axios.post(process.env.NEXT_PUBLIC_API_ENDPOINT + "", {
         passPhrase,
         password,
       });

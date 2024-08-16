@@ -1,4 +1,3 @@
-// UserImport.tsx
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -14,19 +13,27 @@ const UserImport: React.FC<IUserImportProps> = ({ onImport }) => {
 
   const handleImport = async () => {
     try {
-      const response = await axios.post("http://localhost:3001/users/import", {
-        passPhrase,
-        password,
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/users/import`,
+        {
+          passPhrase,
+          password,
+        }
+      );
 
       const { message, publicKey, privateKey } = response.data;
 
       setPublicKey(publicKey);
       setPrivateKey(privateKey);
 
+      // Store user data in localStorage
+      localStorage.setItem('user', JSON.stringify(response.data));
+
       onImport(message, publicKey, privateKey);
     } catch (error) {
-      console.error(error);
+      console.error("Error importing user:", error);
+      setPublicKey("")
+      setPrivateKey("")
       onImport("Error: Failed to import");
     }
   };
@@ -41,8 +48,8 @@ const UserImport: React.FC<IUserImportProps> = ({ onImport }) => {
         placeholder="Enter pass phrase"
         className="input border rounded border-gray-800 p-1"
       />
-      <br></br>
-      <br></br>
+      <br />
+      <br />
       <input
         type="text"
         value={password}
@@ -50,8 +57,8 @@ const UserImport: React.FC<IUserImportProps> = ({ onImport }) => {
         placeholder="Enter password"
         className="input border rounded border-gray-800 p-1"
       />
-      <br></br>
-      <br></br>
+      <br />
+      <br />
       <button
         onClick={handleImport}
         className="btn border rounded border-white bg-gray-800 text-white p-1"

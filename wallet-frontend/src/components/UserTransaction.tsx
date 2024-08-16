@@ -35,7 +35,7 @@ const UserTransaction: React.FC<IUserTransactionProps> = ({
   const handleTransaction = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/users/transaction",
+        process.env.NEXT_PUBLIC_API_ENDPOINT + "/users/transaction",
         {
           senderPrivateKey,
           senderPublicKey,

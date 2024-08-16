@@ -1,46 +1,39 @@
 import { Injectable } from '@nestjs/common';
-
-var { Level } = require('level');
-var db = new Level('./userdb', { valueEncoding: 'json' });
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from 'entity/user.entity';
 
 @Injectable()
 export class UserService {
-  private readonly users: User[] = [];
+  constructor(
+    @InjectRepository(User) private readonly userRepo: Repository<User>
+  ) {}
 
   async create(newUser: CreateUserDto): Promise<User> {
-    const user: User = {
-      id: this.users.length + 1,
+    const user = this.userRepo.create({
       passPhrase: newUser.passPhrase,
       publicKey: newUser.publicKey,
       privateKey: newUser.privateKey,
       password: newUser.password,
-      balance: 1000,
-    };
+      balance: 0,
+    });
 
-    this.users.push(user);
-    return user;
+    return await this.userRepo.save(user);
   }
 
-  async findByPassPhrase(passPhrase: string): Promise<User | undefined> {
-    return this.users.find((user) => user.passPhrase === passPhrase);
+  async findByPassPhrase(passPhrase: string, password: string): Promise<User | undefined> {
+    const user: any = await this.userRepo.findOne({ where: { passPhrase, password} });
+    console.log(user)
+    return user
   }
 
   async update(user: User): Promise<void> {
-    await db.put(user.id.toString(), user.publicKey, user.password);
+    await this.userRepo.update(user.id, user);
   }
 
   async findByPublicKey(publicKey: string): Promise<User | undefined> {
-    return this.users.find((user) => user.publicKey === publicKey);
+    return await this.userRepo.findOne({ where: { publicKey } });
   }
-}
-
-interface User {
-  id: number;
-  passPhrase: string;
-  publicKey: string;
-  privateKey: string;
-  password: string;
-  balance: number;
 }
 
 interface CreateUserDto {

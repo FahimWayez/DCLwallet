@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const backendUrl = "http://localhost:3001";
+const backendUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,6 +13,7 @@ export default async function handler(
       const response = await axios.post(`${backendUrl}/users/register`, {
         password,
       });
+      console.log(response)
       res.status(200).json(response.data);
     } catch (error) {
       res.status(500).json({ message: "Error: Failed to register" });

@@ -44,7 +44,7 @@ export class UserController {
     @Body('passPhrase') passPhrase: string,
     @Body('password') password: string,
   ): Promise<any> {
-    const user = await this.userService.findByPassPhrase(passPhrase);
+    const user = await this.userService.findByPassPhrase(passPhrase, password);
     if (!user) {
       throw new UnauthorizedException('Invalid passphrase');
     }
@@ -53,18 +53,14 @@ export class UserController {
 
     await this.userService.update(user);
 
-    return {
-      publicKey: user.publicKey,
-      privateKey: user.privateKey,
-      password: user.password,
-    };
+    return user;
   }
 
   @Get('privateKey')
   async getPrivateKey(@Req() request): Promise<any> {
     const { passPhrase, password } = request.body;
 
-    const user = await this.userService.findByPassPhrase(passPhrase);
+    const user = await this.userService.findByPassPhrase(passPhrase, password);
     if (!user || user.password !== password) {
       throw new UnauthorizedException('Invalid passphrase or password');
     }
@@ -155,7 +151,7 @@ export class UserController {
   async postTransaction(transaction): Promise<void> {
     try {
       const response = await axios.post(
-        'http://192.168.186.8:3000/transaction',
+        'http://192.168.68.104:3000/transaction', ///////////// ENDPOINT
         transaction,
       );
       console.log('Transaction broadcasted:', response.data);

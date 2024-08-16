@@ -22,7 +22,7 @@ const Home: React.FC = () => {
         </nav>
       </header>
       <div className="flex flex-col items-start min-h-screen py-10 bg-gray-800 px-4">
-        <TransactionBalance />
+        <TransactionBalance msg = {importMessage} />
         <br></br>
         <UserRegister onRegister={setRegisterMessage} />
         <UserImport onImport={setImportMessage} />

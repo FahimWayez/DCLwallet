@@ -1,14 +1,24 @@
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const TransactionBalance: React.FC = () => {
-  const [balance, setBalance] = useState<number | null>(null);
+interface ChildComponentProps {
+  msg: string
+}
 
-  useEffect(() => {
+const TransactionBalance: React.FC<ChildComponentProps> = ({msg}) => {
+  const [balance, setBalance] = useState<number | null>(null);
+ 
+
+
+  setInterval(() => {
     const fetchBalance = async () => {
       try {
+        const user: any = localStorage.getItem('user')
+        if(!user) return;
+        console.log(user)
         const response = await axios.get(
-          "http://192.168.186.8:3000/transaction/balance/0413c725274b4709b5faef702e0e91241eefca047a041561ce1d02e7e397fbe665de7f332c4799203770b16958f5e9989c3f11f0ae352588a75f440b891dc990b0"
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT_CHAIN}/transaction/balance/${user.publicKey}`
         );
         setBalance(response.data.balance);
       } catch (error) {
@@ -17,11 +27,11 @@ const TransactionBalance: React.FC = () => {
     };
 
     fetchBalance();
-  }, []);
+  }, 1000)
 
   return (
     <div className="bg-white p-6 rounded-md shadow-md">
-      {<p>Balance: {balance}</p>}
+      <p>Balance: {balance != null ? balance : "Loading..."}</p>
     </div>
   );
 };
