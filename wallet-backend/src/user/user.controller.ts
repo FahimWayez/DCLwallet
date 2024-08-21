@@ -18,6 +18,7 @@ export class UserController {
 
   @Post('register')
   async register(@Body('password') password: string): Promise<any> {
+    console.log("Req came")
     const mnemonic = bip39.generateMnemonic();
     const ec = new elliptic.ec('secp256k1');
     const keyPair = ec.genKeyPair();
@@ -151,7 +152,7 @@ export class UserController {
   async postTransaction(transaction): Promise<void> {
     try {
       const response = await axios.post(
-        'http://192.168.68.104:3000/transaction', ///////////// ENDPOINT
+        process.env.NODE_ADDRESS_1+'/transaction', ///////////// ENDPOINT
         transaction,
       );
       console.log('Transaction broadcasted:', response.data);

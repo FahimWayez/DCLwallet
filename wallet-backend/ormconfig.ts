@@ -4,11 +4,11 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
 
 const config: PostgresConnectionOptions = {
   type: 'postgres',
-  database: 'Wallet',
-  host: 'localhost',
+  database: 'wallet',
+  host: 'db_service',
   port: 5432,
-  username: 'postgres',
-  password: 'postgres',
+  username: 'admin',
+  password: 'admin',
   entities: [User],
   synchronize: true,
 };

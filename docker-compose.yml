@@ -1,0 +1,31 @@
+version: '3'
+services:
+  backend:
+    build: 
+      context: ./wallet-backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db_service
+
+  frontend:
+    build: 
+      context: ./wallet-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+  
+  db_service:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=wallet
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_PORT=5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      
+volumes:
+  db_data:
